@@ -12,7 +12,7 @@ import * as fromComponents from './components';
   declarations: [
     ...fromDirectives.directives,
     ...fromPipes.pipes,
-    ...fromComponents.components
+    ...fromComponents.components,
   ],
   providers: [],
   exports: [

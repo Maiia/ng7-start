@@ -3,6 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  i18nPrefix: '',
+  apiBase: 'http://localhost:4200/app/',
   production: false
 };
 

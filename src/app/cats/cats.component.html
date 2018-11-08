@@ -1,0 +1,57 @@
+<div class="container">
+  <h1>{{ 'cats' | translate }}</h1>
+
+  <ul class="list list-group" *ngIf="cats$">
+    <li class="list-group-item"
+        *ngFor="let cat of cats$; let i = index; let odd=odd; let even=even;"
+        [ngClass]="{'list-group-item-light': odd, 'list-group-item-dark': even}">
+      <span>{{ cat.catName }}</span>
+      <span class="remove" (click)="removeItem(cat)">x</span>
+    </li>
+  </ul>
+
+  <form action="post" [formGroup]="catsReactiveForm" class="form-raw" (submit)="onSubmit()">
+    <div class="form-group">
+      <label for="catName">Cat name *</label>
+      <input type="text"
+             class="form-control"
+             id="catName"
+             formControlName="catName"
+             placeholder="Cat name">
+    </div>
+    <div class="form-group">
+      <label for="catColor">Cat color</label>
+      <input type="text"
+             class="form-control"
+             id="catColor"
+             formControlName="catColor"
+             placeholder="Cat color">
+    </div>
+    <div class="form-group">
+      <label for="catAge">Cat age</label>
+      <input type="text"
+             class="form-control"
+             id="catAge"
+             formControlName="catAge"
+             placeholder="Cat age">
+    </div>
+    <div class="form-group">
+      <label for="catHabits">Cat habbits</label>
+      <input type="textarea"
+             class="form-control"
+             id="catHabits"
+             formControlName="catHabits"
+             placeholder="Cat habits">
+    </div>
+
+    <button type="submit" class="btn">add cat</button>
+    <button class="btn" (click)="getCats()">get cats (console)</button>
+  </form>
+
+  <div class="container" *ngIf="catsOwners$">
+    <div *ngFor="let catOwner of catsOwners$">
+      <div class="email">{{ catOwner.email }}</div>
+      <div class="hairColor">{{ catOwner.hairColor }}</div>
+    </div>
+  </div>
+</div>
