@@ -1,15 +1,25 @@
 import { CatsActionTypes, CatsActions } from './cats.actions';
 
 export interface State {
-  'cat': {
-    'catName': string
-  }
+  'cats': [
+    {
+      'catName': string,
+      'catColor': string,
+      'catHabits': string,
+      'catOwner': string
+    }
+  ]
 }
 
 export const initialState: State = {
-  'cat': {
-    'catName': 'Piter'
-  }
+  'cats': [
+    {
+      'catName': 'Piter',
+      'catColor': 'brown',
+      'catHabits': 'lazy',
+      'catOwner': '',
+    }
+  ]
 };
 
 const newState = (state, newData) => Object.assign({}, state, newData);

@@ -1,16 +1,18 @@
 <div class="container">
   <h1>{{ 'cats' | translate }}</h1>
 
-  <ul class="list list-group" *ngIf="cats$">
+  <ul class="list list-group" *ngIf="cats">
     <li class="list-group-item"
-        *ngFor="let cat of cats$; let i = index; let odd=odd; let even=even;"
+        *ngFor="let cat of cats; let i = index; let odd=odd; let even=even;"
         [ngClass]="{'list-group-item-light': odd, 'list-group-item-dark': even}">
       <span>{{ cat.catName }}</span>
       <span class="remove" (click)="removeItem(cat)">x</span>
     </li>
   </ul>
 
-  <form action="post" [formGroup]="catsReactiveForm" class="form-raw" (submit)="onSubmit()">
+  <h3>Quick cat adding</h3>
+
+  <form action="post" [formGroup]="catsReactiveForm" class="form-raw" (submit)="onSubmit()" *ngIf="initializedForm">
     <div class="form-group">
       <label for="catName">Cat name *</label>
       <input type="text"
@@ -28,14 +30,6 @@
              placeholder="Cat color">
     </div>
     <div class="form-group">
-      <label for="catAge">Cat age</label>
-      <input type="text"
-             class="form-control"
-             id="catAge"
-             formControlName="catAge"
-             placeholder="Cat age">
-    </div>
-    <div class="form-group">
       <label for="catHabits">Cat habbits</label>
       <input type="textarea"
              class="form-control"
@@ -43,15 +37,52 @@
              formControlName="catHabits"
              placeholder="Cat habits">
     </div>
+    <div class="form-group" *ngIf="catsOwners">
+      <label for="catOwner">Cat owner</label>
+      <select class="form-control"
+            (change)="onChange($event.target.value)"
+            id="catOwner"
+            formControlName="catOwner" #catOwnerType>
+        <option [ngValue]="null">Select</option>
+        <option value="addOwner" selected>Add owner</option>
+        <option *ngFor="let catOwner of catsOwners; let i = index" value="catOwner">{{ catOwner.name }}</option>
+      </select>
+    </div>
 
     <button type="submit" class="btn">add cat</button>
     <button class="btn" (click)="getCats()">get cats (console)</button>
   </form>
 
-  <div class="container" *ngIf="catsOwners$">
-    <div *ngFor="let catOwner of catsOwners$">
-      <div class="email">{{ catOwner.email }}</div>
-      <div class="hairColor">{{ catOwner.hairColor }}</div>
+  <div *ngIf="showAddOwner">
+    <h1>Quick owner adding</h1>
+
+    <form action="post" [formGroup]="catsOwnersReactiveForm" class="form-raw" (submit)="onSubmitOwners()" *ngIf="initializedForm">
+      <div class="form-group">
+        <label for="name">Cat owner name *</label>
+        <input type="text"
+               class="form-control"
+               id="name"
+               formControlName="name"
+               placeholder="Cat owner name">
+      </div>
+      <div class="form-group">
+        <label for="phone">Cat owner phone number *</label>
+        <input type="text"
+               class="form-control"
+               id="phone"
+               formControlName="phone"
+               placeholder="Cat owner phone number">
+      </div>
+
+      <button type="submit" class="btn">add owner</button>
+    </form>
+
+    <div class="container" *ngIf="catsOwners">
+      <div *ngFor="let catOwner of catsOwners">
+        <div class="email">{{ catOwner.email }}</div>
+        <div class="hairColor">{{ catOwner.hairColor }}</div>
+      </div>
     </div>
   </div>
+
 </div>

@@ -22,7 +22,7 @@ export class CatsEffects {
       switchMap((action: CatsActions.LoadCats) =>
         this.catService$.getAllCats().pipe(
           map(stock => {
-            console.log('effect all', stock);
+            // console.log('effect all', stock);
             return new CatsActions.LoadCatsSuccess(stock)}
           ),
           catchError(error => of(new CatsActions.LoadCatsError({ error })))

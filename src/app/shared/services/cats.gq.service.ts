@@ -5,9 +5,10 @@ import { Apollo } from 'apollo-angular';
 
 const CurrentUserForProfile = gql`
   query CurrentUserForProfile {
-     cats_owners {
-       hairColor
+     catsOwners {
+       name
        email
+       phone
      }
   }
 `;
@@ -17,8 +18,10 @@ const CurrentUserForProfile = gql`
   providedIn: 'root'
 })
 export class CatsGqService {
+  i = 0;
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo) {
+  }
 
   getAllCatsGql() {
     return this.apollo.watchQuery<any>({ query: CurrentUserForProfile }).valueChanges;

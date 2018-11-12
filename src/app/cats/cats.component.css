@@ -1,3 +1,10 @@
+label {
+  margin-bottom: 5px;
+}
+
+label + input {
+  margin-top: 5px;
+}
 
 .list li {
   position: relative;
@@ -16,10 +23,11 @@ form {
   margin-top: 30px;
 }
 
-form input {
-  margin-top: 15px;
-}
-
 form button {
   margin: 15px 15px 0 0;
+}
+
+.ng-invalid,
+.ng-touche {
+  border-color: red;
 }

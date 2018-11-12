@@ -25,14 +25,3 @@ app.use('/', graphqlHTTP({
 app.listen(port);
 console.log('GraphQL API server running at localhost:'+ port);
 
-
-
-// var corsOptions = {
-//   origin: 'http://localhost:4200',
-//   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-// };
-//
-// app.use(cors(corsOptions));
-
-
-

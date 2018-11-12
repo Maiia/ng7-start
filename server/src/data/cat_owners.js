@@ -1,15 +1,15 @@
 const CatsOwner = [
   {
-    ownerName: 'Kate',
+    name: 'Kate',
     hairColor: 'red',
     email: 'katerinadribnitsa@gmail.com',
-    phoneNumber: '+38(093)0197913'
+    phone: '+38(093)0197913'
   },
   {
-    ownerName: 'KatiOk',
+    name: 'KatiOk',
     hairColor: 'redhead',
     email: 'katiOk@gmail.com',
-    phoneNumber: '+38(093)7776663'
+    phone: '+38(093)7776663'
   }
 ];
 

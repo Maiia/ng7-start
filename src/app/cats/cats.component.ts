@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Cat, CatService } from '../shared/services/cats.service';
 import { Store } from '@ngrx/store';
@@ -7,6 +7,7 @@ import * as CatsOwnersGqlActions from './cats-owners-store/cats-owners.actions';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CatsGqService } from '../shared/services/cats.gq.service';
+import { combineLatest } from 'rxjs';
 
 
 @Component({
@@ -18,15 +19,17 @@ import { CatsGqService } from '../shared/services/cats.gq.service';
 
 export class CatsComponent implements OnInit {
   cats: Array<Cat>;
-  cats$: any;
-  initialized;
-  initializedGql;
+  initializedCats;
+  initializedCatsOwnars;
+  initializedForm;
 
   catsReactiveForm: FormGroup;
+  catsOwnersReactiveForm: FormGroup;
   formControls: any;
 
   catsOwners: any;
-  catsOwners$: any;
+  showAddOwner: boolean;
+  catsOwnersReactiveFormInited: boolean;
 
   constructor(
     private store: Store<any>,
@@ -36,47 +39,34 @@ export class CatsComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.translate.setDefaultLang('en');
+    this.showAddOwner = false;
+    this.catsOwnersReactiveFormInited = false;
   }
 
   ngOnInit() {
-    this.initialized = false;
+    this.initializedCats = false;
+    this.initializedForm = false;
+    this.initializedCatsOwnars = false;
 
-    // from store
-    this.store
-      .subscribe((p: any) => {
-        this.cats$ = p['catsState']['cats'];
-
-        if (!this.initialized) {
-          this.initialized = true;
-          this.store.dispatch(new CatsActions.LoadCats());
+    this.store.dispatch(new CatsActions.LoadCats());
+    combineLatest([
+      this.store.select('catsOwnersState'),
+      this.store.select('catsState')]
+    ).subscribe(
+      data => data.map(item => {
+        this[Object.keys(item).pop()] = item[Object.keys(item).pop()];
+        if (this.catsOwners && this.catsOwners.length > 0) {
+          this.initFormData()
         }
-      });
+        }),
+      err => console.log('err', err),
+      () => console.log('off loader')
+    )
 
-    // from store gql
-    this.store
-      .subscribe((p: any) => {
-        this.catsOwners$ = p['catsOwnersState']['cats_owners'];
-        console.log('cats owners ', this.catsOwners$);
-
-        if (!this.initializedGql) {
-          this.initializedGql = true;
-          this.store.dispatch(new CatsOwnersGqlActions.LoadCatsOwnersGql());
-        }
-      });
-
-    // form
-    this.initFormData();
-
-    this.catGqService.getAllCatsGql().subscribe(
-      data => {
-        console.log('arr?', data);
-        this.catsOwners = data.data
-      }
-    );
+    this.store.dispatch(new CatsOwnersGqlActions.LoadCatsOwnersGql());
   }
 
   removeItem(item) {
-    console.log('item', item);
     this.store.dispatch(new CatsActions.RemoveCat(item));
   }
 
@@ -87,14 +77,13 @@ export class CatsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('invalid', this.catsReactiveForm.controls.catName.value);
-    console.log('invalid', this.catsReactiveForm.valid);
+    console.log('valid', this.catsReactiveForm.controls.catName.value);
+    console.log('valid', this.catsReactiveForm.valid);
 
     if (this.catsReactiveForm.valid) {
       this.store.dispatch(new CatsActions.AddCat(this.catsReactiveForm.value));
       this.initFormData();
     } else {
-      console.log('123');
       this.formControls = Object.assign({}, this.catsReactiveForm.controls);
       Object.keys(this.formControls)
         .forEach(controlName => this.formControls[controlName].markAsTouched());
@@ -102,13 +91,43 @@ export class CatsComponent implements OnInit {
     }
   }
 
+  onSubmitOwners() {
+    if (this.catsOwnersReactiveForm.valid) {
+      this.store.dispatch(new CatsActions.AddCat(this.catsOwnersReactiveForm.value));
+      this.initFormData();
+    } else {
+      this.formControls = Object.assign({}, this.catsOwnersReactiveForm.controls);
+      Object.keys(this.formControls)
+        .forEach(controlName => this.formControls[controlName].markAsTouched());
+      return;
+    }
+  }
+
   initFormData() {
+    console.log('asd', this.catsOwners[0].name);
+    this.initializedForm = true;
     this.catsReactiveForm = this.fb.group({
       catName: new FormControl('', [Validators.required]),
       catColor: new FormControl(''),
-      catAge: new FormControl(''),
-      catHabits: new FormControl('')
+      catHabits: new FormControl(''),
+      catOwner: new FormControl()
+      // catOwner: new FormControl(this.catsOwners[0].name)
     })
+  }
+
+  initFormDataOwner() {
+    this.catsOwnersReactiveForm = this.fb.group({
+      name: new FormControl('', [Validators.required]),
+      phone: new FormControl('')
+    })
+  }
+
+  onChange(value){
+    this.showAddOwner = value === 'addOwner';
+    if (this.showAddOwner && !this.catsOwnersReactiveFormInited) {
+      this.catsOwnersReactiveFormInited = true;
+      this.initFormDataOwner()
+    }
   }
 
 }

@@ -22,10 +22,26 @@ export class CatsOwnersEffects {
       switchMap((action: CatsOwnersGqlActions.LoadCatsOwnersGql) =>
         this.catsGqlService$.getAllCatsGql().pipe(
           map(stock => {
-            console.log('arr1?', stock['data']);
+            // console.log('arr1?', stock['data']);
             return new CatsOwnersGqlActions.LoadCatsOwnersGqlSuccess(stock['data'])}
           ),
           catchError(error => of(new CatsOwnersGqlActions.LoadCatsOwnersGqlError({ error })))
+        )
+      )
+    )
+  };
+
+  @Effect()
+  addCats = () => {
+    return this.actions$.pipe(
+      ofType<CatsOwnersGqlActions.AddCatsOwnersGql>(CatsOwnersGqlActionTypes.ADD_CATS_OWNERS_GQL),
+      switchMap((action: CatsOwnersGqlActions.AddCatsOwnersGql) =>
+        this.catsGqlService$.getAllCatsGql().pipe(
+          map(stock => {
+            // console.log('arr1?', stock['data']);
+            return new CatsOwnersGqlActions.AddCatsOwnersGqlSuccess(stock['data'])}
+          ),
+          catchError(error => of(new CatsOwnersGqlActions.AddCatsOwnersGqlError({ error })))
         )
       )
     )
