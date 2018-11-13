@@ -9,10 +9,16 @@ import { LoaderService } from './shared/services/loader.service';
 export class AppComponent implements OnInit {
   title = 'binck';
 
-  constructor() // private loaderService: LoaderService
-  {
-    // this.loaderService.show();
+  constructor(private loaderService: LoaderService) {
+    // this.loaderService.display(true);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    // const self = this;
+    // setTimeout(
+    //   function() {
+    //     self.loaderService.display(false);
+    //   }, 1000
+    // )
+  }
 }
