@@ -15,6 +15,8 @@ import {
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '@env/environment';
 import { reducers, metaReducers } from './core.state';
+import { LoaderModule } from './loader/loader.module';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   imports: [
@@ -29,7 +31,8 @@ import { reducers, metaReducers } from './core.state';
     // EffectsModule.forRoot([]),
     environment.production
       ? []
-      : StoreDevtoolsModule.instrument({ name: 'Angular NgRx Store' })
+      : StoreDevtoolsModule.instrument({ name: 'Angular NgRx Store' }),
+    LoaderModule
   ],
   providers: [
     {
@@ -46,7 +49,7 @@ import { reducers, metaReducers } from './core.state';
       useClass: CustomSerializer
     }
   ],
-  exports: []
+  exports: [LoaderComponent]
 })
 export class CoreModule {
   constructor(
