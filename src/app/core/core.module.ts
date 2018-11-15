@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { LoaderComponent } from './components/loader';
+
 import { Interceptor } from './http.interceptor.service';
 import { AppErrorHandler } from './error-handler.service';
 import { CustomSerializer } from './custom-router-state-serializer';
@@ -15,24 +17,32 @@ import {
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '@env/environment';
 import { reducers, metaReducers } from './core.state';
-import { LoaderModule } from './loader/loader.module';
-import { LoaderComponent } from './loader/loader.component';
+import { NgxPermissionsModule } from 'ngx-permissions';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyMaterialModule } from '@ngx-formly/material';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthorizationEffects } from '../authorization/authorization.effects';
 
 @NgModule({
   imports: [
     // angular
     CommonModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormlyModule.forRoot(),
+    FormlyMaterialModule,
     HttpClientModule,
 
     // ngrx
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreRouterConnectingModule.forRoot(),
-    // EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AuthorizationEffects]),
     environment.production
       ? []
       : StoreDevtoolsModule.instrument({ name: 'Angular NgRx Store' }),
-    LoaderModule
+
+    NgxPermissionsModule.forRoot()
   ],
   providers: [
     {
@@ -49,7 +59,8 @@ import { LoaderComponent } from './loader/loader.component';
       useClass: CustomSerializer
     }
   ],
-  exports: [LoaderComponent]
+  declarations: [LoaderComponent],
+  exports: [LoaderComponent, NgxPermissionsModule]
 })
 export class CoreModule {
   constructor(
