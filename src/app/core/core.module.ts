@@ -11,6 +11,12 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '@env/environment';
 import { reducers, metaReducers } from './core.state';
+import { FormlyMaterialModule } from '@ngx-formly/material';
+import { FormlyModule } from '@ngx-formly/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AuthorizationEffects } from '../authorization/authorization.effects';
+import { EffectsModule } from '@ngrx/effects';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
   imports: [
@@ -18,16 +24,23 @@ import { reducers, metaReducers } from './core.state';
     CommonModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    FormlyModule.forRoot(),
+    FormlyMaterialModule,
 
     // ngrx
     StoreModule.forRoot(reducers, { metaReducers }),
     StoreRouterConnectingModule.forRoot(),
-    // EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AuthorizationEffects]),
     environment.production
       ? []
-      : StoreDevtoolsModule.instrument({ name: 'Angular NgRx Store' })
+      : StoreDevtoolsModule.instrument({ name: 'Angular NgRx Store' }),
+    NgxPermissionsModule.forRoot()
   ],
-  providers: [httpInterceptorProviders, routerSerializer]
+  providers: [httpInterceptorProviders, routerSerializer],
+
+  declarations: [],
+  exports: [NgxPermissionsModule]
 })
 export class CoreModule {
   constructor(
