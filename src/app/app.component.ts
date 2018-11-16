@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LoaderService } from './shared/services/loader.service';
+import { LoaderService } from './core/services/loader.service';
+
+import { NgxPermissionsService } from 'ngx-permissions';
+import { HttpClient } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'bb-root',
@@ -9,16 +13,26 @@ import { LoaderService } from './shared/services/loader.service';
 export class AppComponent implements OnInit {
   title = 'binck';
 
-  constructor(private loaderService: LoaderService) {
-    // this.loaderService.display(true);
-  }
+  constructor(
+    private store: Store<any>,
+    private loaderService: LoaderService,
+    private permissionsService: NgxPermissionsService
+  ) {}
 
   ngOnInit() {
-    // const self = this;
-    // setTimeout(
-    //   function() {
-    //     self.loaderService.display(false);
-    //   }, 1000
-    // )
+    this.store
+      .select('authorization')
+      .subscribe(
+        data => this.permissionsService.addPermission(data.permission),
+        error => console.log('permission', error)
+      );
+  }
+
+  onClick() {
+    this.loaderService.display(true);
+
+    setTimeout(() => {
+      this.loaderService.display(false);
+    }, 1000);
   }
 }
