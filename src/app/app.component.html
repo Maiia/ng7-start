@@ -2,11 +2,12 @@
 
 <div class="app header-fixed sidebar-lg-show sidebar-fixed aside-menu-fixed">
   <div class="dashboard">
+
+    <!-- HEADER -->
     <header class="app-header navbar">
       <span class="navbar-brand">
-        <a href="#">
-          <img class="navbar-brand-full" src="../assets/binck-logo_header.png" width="89" height="25" alt="CoreUI Logo">
-          <img class="navbar-brand-minimized" src="assets/binck-logo_header.png" width="30" height="30" alt="CoreUI Logo">
+        <a href="/">
+          <img class="navbar-brand-full" src="../assets/binck-logo_header.png" width="89" height="25" alt="BinckBank">
         </a>
       </span>
       <ul class="nav navbar-nav d-md-down-none">
@@ -33,9 +34,12 @@
       </ul>
     </header>
 
-    <div class="app-body">
-      <section class="sidebar">
+
+    <!-- MAIN -->
+    <section class="app-body">
+      <aside class="sidebar">
         <div class="sidebar-nav ps ps--active-y" role="nav" [perfectScrollbar]>
+
           <ul class="nav">
             <li class="nav-title">General</li>
             <li class="nav-item">
@@ -65,9 +69,13 @@
               </a>
             </li>
           </ul>
+
         </div>
-      </section>
-      <div class="main">
+      </aside>
+
+
+      <main class="main">
+
         <ol class="breadcrumb">
           <li class="breadcrumb-menu d-md-down-none">
             <div aria-label="Button group with nested dropdown" class="btn-group" role="group">
@@ -75,17 +83,24 @@
             </div>
           </li>
         </ol>
+
         <router-outlet></router-outlet>
-      </div>
-    </div>
+
+      </main>
+    </section>
+
+    <!--FOOTER-->
     <footer class="app-footer">
-        <span>
-          <a href="https://www.binck.nl/laten-beleggen">BinckBank</a>
-          © 2018 BinckBank.
-        </span>
+
+      <span>
+        <a href="https://www.binck.nl/laten-beleggen">BinckBank</a>
+        © 2018 BinckBank.
+      </span>
+
       <span class="ml-auto">
-          Powered by <a href="https://www.levi9.com/">Levi9 Ukraine</a>
-        </span>
+        Powered by <a href="https://www.levi9.com/">Levi9 Ukraine</a>
+      </span>
+
     </footer>
   </div>
 </div>
