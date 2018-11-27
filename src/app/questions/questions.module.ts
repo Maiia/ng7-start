@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { QuestionsRoutingModule } from './questions-routing.module';
 import { QuestionsComponent } from './questions.component';
+import { BBFormlyModule } from '../formly/formly.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    QuestionsRoutingModule
+    QuestionsRoutingModule,
+    BBFormlyModule
   ],
   declarations: [QuestionsComponent]
 })
