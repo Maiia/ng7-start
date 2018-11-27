@@ -3,7 +3,7 @@ import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { Validation } from './validation.helper';
 import { SharedModule } from './../shared/shared.module';
-import { FormlyComponent } from './formly-container/formly-container.component';
+import { FormlyContainerComponent } from './formly-container/formly-container.component';
 
 @NgModule({
   imports: [
@@ -19,7 +19,7 @@ import { FormlyComponent } from './formly-container/formly-container.component';
     }),
     FormlyMaterialModule
   ],
-  declarations: [FormlyComponent],
-  exports: [FormlyComponent]
+  declarations: [FormlyContainerComponent],
+  exports: [FormlyContainerComponent]
 })
 export class BBFormlyModule {}

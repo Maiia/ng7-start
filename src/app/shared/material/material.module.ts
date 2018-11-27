@@ -46,12 +46,12 @@ import {
   imports: [
     // @angular/materials
     // MatAutocompleteModule,
-    // MatBadgeModule,
+    MatBadgeModule,
     // MatBottomSheetModule,
     MatButtonModule,
     // MatButtonToggleModule,
     // MatCardModule,
-    // MatCheckboxModule,
+    MatCheckboxModule,
     // MatChipsModule,
     // MatTableModule,
     // MatDatepickerModule,
@@ -70,14 +70,14 @@ import {
     // MatRadioModule,
     // MatRippleModule,
     // MatSelectModule,
-    // MatSidenavModule,
+    MatSidenavModule,
     // MatSlideToggleModule,
     // MatSliderModule,
-    MatSnackBarModule,
+    MatSnackBarModule
     // MatSortModule,
     // MatStepperModule,
     // MatTabsModule,
-    MatToolbarModule
+    // MatToolbarModule
     // MatTooltipModule,
     // MatTreeModule,
 
@@ -110,7 +110,7 @@ import {
     // MatRadioModule,
     // MatRippleModule,
     // MatSelectModule,
-    // MatSidenavModule,
+    MatSidenavModule,
     // MatSlideToggleModule,
     // MatSliderModule,
     // MatSnackBarModule,
