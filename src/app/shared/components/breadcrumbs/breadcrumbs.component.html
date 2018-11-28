@@ -1,0 +1,25 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" *ngIf="pagesNames">
+    <li
+      class="breadcrumb-item"
+      *ngFor="let pageName of pagesNames; let i = index"
+      [ngClass]="{ active: i === currentPage }"
+    >
+      <a href="#" *ngIf="i <= currentPage; else: a">
+        <div *ngIf="i === currentPage || i > currentPage; else: b">
+          <span class="animation"></span>
+        </div>
+        <ng-template #b>
+          <span
+            class="animation"
+            [@lineAnimation]="breadcrumbsLineState"
+          ></span>
+        </ng-template>
+        {{ pageName }}
+      </a>
+      <ng-template #a>
+        <span>{{ pageName }}</span>
+      </ng-template>
+    </li>
+  </ol>
+</nav>

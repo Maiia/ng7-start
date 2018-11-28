@@ -1,0 +1,31 @@
+@import '../../../../styles/variables';
+
+.breadcrumb {
+  overflow: hidden;
+
+  li {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .animation {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    //transform: translateX(-100%);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  }
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  width: 3px;
+  height: 3px;
+  padding: 0;
+  border-radius: 50%;
+  background: #000;
+}

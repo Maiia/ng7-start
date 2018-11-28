@@ -6,13 +6,15 @@ import { MaterialModule } from './material';
 import * as fromDirectives from './directives';
 import * as fromPipes from './pipes';
 import * as fromComponents from './components';
+import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, MaterialModule],
   declarations: [
     ...fromDirectives.directives,
     ...fromPipes.pipes,
-    ...fromComponents.components
+    ...fromComponents.components,
+    BreadcrumbsComponent
   ],
   providers: [],
   exports: [

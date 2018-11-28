@@ -1,3 +1,9 @@
+<bb-breadcrumbs
+  [pagesNames]="pagesNames"
+  [currentPage]="currentPage"
+  [breadcrumbsLineState]="breadcrumbsLineState"
+></bb-breadcrumbs>
+
 <div *ngFor="let page of pages; let index = index; let last = last">
   <form
     [formGroup]="form.at(index)"
